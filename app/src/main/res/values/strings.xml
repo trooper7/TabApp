@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TabApp</string>
+    <string name="ok_btn">OK</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="pin_admin_txt">Εισάγετε όνομα και PIN διαχειριστή</string>
+    <string name="name_admin">Όνομα διαχειριστή</string>
+    <string name="pin_admin">PIN διαχειριστή</string>
+    <string name="pin_user_txt">Εισάγετε όνομα και PIN χρήστη</string>
+    <string name="name_user">Όνομα χρήστη</string>
+    <string name="pin_user">PIN χρήστη</string>
+</resources>
