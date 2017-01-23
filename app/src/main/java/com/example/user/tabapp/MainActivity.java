@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.name_txt2);
         userPin = (EditText) findViewById(R.id.pin_txt2);
 
+        final UserManagement usrMgr = new UserManagement();
+        if(usrMgr.UsersFileExist(getApplicationContext(), "users.csv"))
+            signupSucceess();
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,19 +48,13 @@ public class MainActivity extends AppCompatActivity {
                     User initAdmin = new User(adminName.getText().toString(), adminPin.getText().toString(), true);
                     User initUser = new User(userName.getText().toString(), userPin.getText().toString(), false);
 
-                    UserManagement usrMgr = new UserManagement();
-
-                    usrMgr.CreateUsersCSV(getApplicationContext(), "users.csv");
+                    // usrMgr.CreateUsersCSV(getApplicationContext(), "users.csv");
                     usrMgr.WriteUserToFile(getApplicationContext(), "users.csv", initAdmin);
                     usrMgr.WriteUserToFile(getApplicationContext(), "users.csv", initUser);
 
                     signupSucceess();
 
-
-
-
                 } catch (UserException uex) {
-
                     Toast.makeText(getApplicationContext(), uex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

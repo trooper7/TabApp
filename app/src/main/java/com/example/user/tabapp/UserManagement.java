@@ -1,10 +1,16 @@
 package com.example.user.tabapp;
 
 import android.content.Context;
+import android.provider.MediaStore;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by user on 28/11/2016.
@@ -15,48 +21,60 @@ import java.io.IOException;
 
 public class UserManagement {
 
-
     /**
-     * This method creates the user CSV file into the specified path
-     * @param context
-     * @return
+     * This method checks if the users.csv file exists
      */
-    public boolean CreateUsersCSV(Context context, String path) {
-        // 1. Create file
-        try {
-            FileOutputStream fileOutputStream = context.openFileOutput(path, Context.MODE_PRIVATE);
-
-            fileOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 2. If file successfully created, return true, else return false
-
-        return context.getFileStreamPath(path).exists();
+    public boolean UsersFileExist(Context context, String filename) {
+        File f = new File(context.getFilesDir(), filename);
+        if(f.exists())
+            return true;
+        else
+            return false;
     }
 
+    public ArrayList<User> GetUsers(Context context, String filename) {
+        ArrayList<User> results = new ArrayList<User>();
 
-    public boolean WriteUserToFile(Context context, String path, User usr){
-        // 1. Check if Users file exists IF YES open for append, IF NO call CreateUsersCSV
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = context.openFileInput(filename);
+            InputStreamReader isr = new InputStreamReader ( fileInputStream ) ;
+            BufferedReader buffreader = new BufferedReader ( isr ) ;
 
-        // 2. Write the user record to the file and if everything OK, return true
+            String readString = buffreader.readLine();
 
-        // 3. If user is a simple non-admin user, also open his sales CSV file
+            while(readString != null) {
+                // 1. Parse CSV line and create a new User Object
+                String[] s = readString.split(";");
+                if(s.length>0) {
+                    User u = new User(s[0], s[1], Boolean.parseBoolean(s[2]));
+                    results.add(u);
+                }
+                readString = buffreader.readLine();
+            }
+
+        } catch(Exception e) {
+            return null;
+        }
+
+        return results;
+    }
+
+    public boolean WriteUserToFile(Context context, String filename, User usr){
+        // 1. Write the user record to the file and if everything OK, return true
+        // 2. If user is a simple non-admin user, also open his sales CSV file
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = context.openFileOutput(path, Context.MODE_APPEND);
-        } catch (FileNotFoundException e) {
+            String fileout = usr.getUsername() + ";" + usr.getPin() + ";" + usr.isAdmin() + "\n";
+
+            fileOutputStream = context.openFileOutput(filename, Context.MODE_APPEND);
+            fileOutputStream.write(fileout.getBytes());
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
 
-        try {
-            fileOutputStream.write(usr.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return true;
     }
 
     public boolean DeleteUserFromFile(User usr) {
@@ -66,5 +84,7 @@ public class UserManagement {
 
         return false;
     }
+
+
 
 }
