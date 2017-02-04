@@ -54,6 +54,13 @@ public class User {
     }
 
     public String toString() {
-        return this.username + ";" + this.pin + ";";
+        String str = this.username;
+        if (this.isAdmin) {
+            str += " (Διαχειριστής)";
+        } else {
+            str += " (Χρήστης)";
+        }
+
+        return str;
     }
 }

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                     User initAdmin = new User(adminName.getText().toString(), adminPin.getText().toString(), true);
                     User initUser = new User(userName.getText().toString(), userPin.getText().toString(), false);
 
-                    // usrMgr.CreateUsersCSV(getApplicationContext(), "users.csv");
                     usrMgr.WriteUserToFile(getApplicationContext(), "users.csv", initAdmin);
                     usrMgr.WriteUserToFile(getApplicationContext(), "users.csv", initUser);
 
