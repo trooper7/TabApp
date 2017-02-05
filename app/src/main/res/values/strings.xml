@@ -8,4 +8,5 @@
     <string name="pin_user_txt">Εισάγετε όνομα και PIN χρήστη</string>
     <string name="name_user">Όνομα χρήστη</string>
     <string name="pin_user">PIN χρήστη</string>
+    <string name="PIN">Εισάγετε το PIN</string>
 </resources>

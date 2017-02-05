@@ -66,7 +66,6 @@ public class UserManagement {
         FileOutputStream fileOutputStream = null;
         try {
             String fileout = usr.getUsername() + ";" + usr.getPin() + ";" + usr.isAdmin() + "\n";
-
             fileOutputStream = context.openFileOutput(filename, Context.MODE_APPEND);
             fileOutputStream.write(fileout.getBytes());
         } catch (Exception e) {

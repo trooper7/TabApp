@@ -29,7 +29,7 @@ public class User {
 
     public void setUsername(String username) throws UserException {
         if(username.isEmpty() || username.length() > 50)
-            throw new UserException("Invalid Username entered");
+            throw new UserException("Καταχωρήστε έγκυρο όνομα χρήστη");
 
         this.username = username;
     }
@@ -40,7 +40,7 @@ public class User {
 
     public void setPin(String pin) throws UserException {
         if (pin.isEmpty() || pin.length() > 8)
-            throw new UserException("Invalid PIN entered");
+            throw new UserException("Καταχωρήστε σωστό κωδικό");
 
         this.pin = pin;
     }
